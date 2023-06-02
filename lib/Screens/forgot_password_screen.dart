@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
-import 'package:flutterapp/Services/auth_services.dart';
-import 'package:flutterapp/Services/globals.dart';
+import 'package:leaveapp/Services/auth_services.dart';
+import 'package:leaveapp/Services/globals.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'login_screen.dart';
 
@@ -14,6 +19,110 @@ import 'package:http/http.dart' as http;
 class ForgotPasswordScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   String _email = '';
+
+  void sendResetEmail(BuildContext context, String email) async {
+    final smtpServer = SmtpServer('smtp.gmail.com',
+        username: 'kath.hrleave@gmail.com',
+        password: 'jofjxhrlalpxicnu',
+        port: 587);
+
+    // final message = Message()
+    //   ..from = Address('kath.hrleave@gmail.com', 'One Document Corporation')
+    //   ..recipients.add(email)
+    //   ..subject = 'Reset Password Notification'
+    //   ..text = 'Instructions for resetting your password...';
+
+    final resetUrl = 'https://example.com/reset-password'; // Replace with actual reset URL
+    final emailBody = '''
+Instructions for resetting your password:
+
+Dear,
+
+We have received a request to reset your password for your account at One Document Corporation.
+
+Please click on the button below to reset your password:
+
+''';
+
+// Create a button that includes the reset URL
+    final resetButton = TextButton(
+      child: Text('Reset Password'),
+      onPressed: () {
+        launch(resetUrl); // Open the reset URL in a web browser
+      },
+    );
+
+// Add the button to the plain text and HTML versions of the email
+    final emailBodyWithButton = '$emailBody\n$resetUrl';
+    final htmlBodyWithButton = '''
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>Instructions for resetting your password:</p>
+    <p>Dear ,</p>
+    <p>We have received a request to reset your password for your account at One Document Corporation.</p>
+    <p>Please click on the button below to reset your password:</p>
+    <button><a href="https://example.com/reset-password">Reset Password</a></button>
+    <p>If you did not request a password reset, please ignore this email and contact us immediately.</p>
+    <p>Thank you,</p>
+    <p>One Document Corporation</p>
+  </body>
+</html>
+''';
+
+// Set the text and HTML properties of the Message object
+    final message = Message()
+      ..from = Address('kath.hrleave@gmail.com', 'One Document Corporation')
+      ..recipients.add(email)
+      ..subject = 'Reset Password Notification'
+      ..text = emailBodyWithButton
+      ..html = htmlBodyWithButton;
+
+
+
+    // final sendReport = await send(message, smtpServer);
+    // print('Message sent: ${sendReport.toString()}');
+
+    try {
+      await send(message, smtpServer);
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text('Email Sent'),
+          content: Text(
+              'Check your email for instructions on how to reset your password.'),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                // TODO: Implement the "forgot password" functionality
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const LoginScreen(),
+                    ));
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } catch (e) {
+      print('Error sending email: $e');
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text('Error'),
+          content: Text('An error occurred while sending the email.'),
+          actions: [
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +177,10 @@ class ForgotPasswordScreen extends StatelessWidget {
             // mainAxisAlignment: MainAxisAlignment.center,
             // crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              // Image.asset(
+              //   'assets/images/onedoc_logo.png',
+              //   height: 80,
+              // ),
               SizedBox(height: 30.0),
               Text(
                 'Forgot your password?',
@@ -75,7 +188,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               ),
               SizedBox(height: 18.0),
               Text(
-                'Enter the email associated with your account to change your password.',
+                'No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16.0),
               ),
@@ -153,10 +266,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onPressed: () {
-                      // TODO: handle button press
-                      // Navigator.pushReplacementNamed(context, '/leave_form');
-                    },
+                    onPressed: () =>
+                        sendResetEmail(context, _emailController.text),
                   ),
                 ),
               ),

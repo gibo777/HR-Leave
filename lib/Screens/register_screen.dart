@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/Services/auth_services.dart';
-import 'package:flutterapp/Services/globals.dart';
+import 'package:leaveapp/Services/auth_services.dart';
+import 'package:leaveapp/Services/globals.dart';
 
 import '../rounded_button.dart';
 import 'home_screen.dart';
@@ -93,21 +93,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SizedBox(
               height: 40,
             ),
-            RoundedButton(
-              btnText: 'Create Account',
-              onBtnPressed: () => createAccountPressed(),
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => const LoginScreen(),
-                    ));
-              },
+              RoundedButton(
+                btnText: 'Create Account',
+                onBtnPressed: () => createAccountPressed(),
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => const LoginScreen(),
+                      ));
+                },
               child: const Text(
                 'already have an account',
                 style: TextStyle(

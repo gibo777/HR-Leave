@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutterapp/Services/auth_services.dart';
-import 'package:flutterapp/Services/globals.dart';
-import 'package:flutterapp/rounded_button.dart';
+import 'package:leaveapp/Services/auth_services.dart';
+import 'package:leaveapp/Services/globals.dart';
+import 'package:leaveapp/rounded_button.dart';
 import 'package:http/http.dart' as http;
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
@@ -158,31 +158,31 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 9, vertical: 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Spacer(),
-                          TextButton(
-                            onPressed: () {
-                              // TODO: Implement the "forgot password" functionality
-                              Navigator.pushReplacementNamed(context, '/forgot_password_screen');
-                            },
-                            child: Text(
-                              'Forgot Password?',
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.normal,
-                                color: Color(0xff6A6F77),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(horizontal: 9, vertical: 0),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: [
+                    //       Spacer(),
+                    //       TextButton(
+                    //         onPressed: () {
+                    //           // TODO: Implement the "forgot password" functionality
+                    //           Navigator.pushReplacementNamed(context, '/forgot_password_screen');
+                    //         },
+                    //         child: Text(
+                    //           'Forgot Password?',
+                    //           style: TextStyle(
+                    //             fontStyle: FontStyle.italic,
+                    //             fontWeight: FontWeight.normal,
+                    //             color: Color(0xff6A6F77),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     SizedBox(
-                      height: 25,
+                      height: 45,
                     ),
                     Center(
                       child: Container(
@@ -213,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         child: MaterialButton(
-                          minWidth: 280,
+                          minWidth: 330,
                           child: Text(
                             'LOG IN',
                             style: GoogleFonts.inter(
@@ -233,7 +233,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 120),
+                    SizedBox(height: 160),
                     Image.asset(
                       'assets/images/onedoc_logo.png',
                       height: 45,

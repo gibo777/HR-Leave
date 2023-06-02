@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutterapp/Services/globals.dart';
+import 'package:leaveapp/Services/globals.dart';
 import 'package:http/http.dart' as http;
 
 class AuthServices {
@@ -30,6 +30,21 @@ class AuthServices {
     };
     var body = json.encode(data);
     var url = Uri.parse(baseURL + 'auth/login');
+    http.Response response = await http.post(
+      url,
+      headers: headers,
+      body: body,
+    );
+    print(response.body);
+    return response;
+  }
+
+  static Future<http.Response> leave(String reason) async {
+    Map data = {
+      "reason": reason,
+    };
+    var body = json.encode(data);
+    var url = Uri.parse(baseURL + 'auth/leave');
     http.Response response = await http.post(
       url,
       headers: headers,
