@@ -52,4 +52,25 @@ class AuthController extends Controller
         $response = ['message' => 'Incorrect email or password'];
         return response()->json($response, 400);
     }
+
+    public function leave(Request $req)
+        {
+            //valdiate
+            $rules = [
+
+                'reason' => 'required|string'
+            ];
+            $validator = Validator::make($req->all(), $rules);
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            }
+            //create new user in users table
+            $leaves = Leave::create([
+
+                'reason' => $req->reason,
+            ]);
+            $token = $user->createToken('Personal Access Token')->plainTextToken;
+            $response = ['reason' => $user, 'token' => $token];
+            return response()->json($response, 200);
+        }
 }
