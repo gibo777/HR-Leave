@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,18 +21,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _selectedDept = '';
-  bool _dateSelected = false;
-  final _dateController = TextEditingController();
-  DateTime _selectedDate = DateTime.now();
+  // String _selectedDept = '';
+  final _endDateController = TextEditingController();
+  DateTime _selectedEndDate = DateTime.now();
+  final _beginDateController = TextEditingController();
+  DateTime _selectedBeginDate = DateTime.now();
   final TextEditingController _reasonController = TextEditingController();
 
-  void _onDaySelected(DateTime selectedDate, DateTime focusedDay) {
-    setState(() {
-      _selectedDate = selectedDate;
-    });
-    Navigator.pop(context);
-  }
+  // void _onDaySelected(DateTime selectedDate, DateTime focusedDay) {
+  //   setState(() {
+  //     _selectedDate = selectedDate;
+  //   });
+  //   Navigator.pop(context);
+  // }
+
+  String? _selectedDept;
+  List<String> dept = ['Motorcycle', 'Car', 'Bus', 'Truck'];
 
   String _reason = '';
 
@@ -371,7 +376,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(8.0),
                       side: BorderSide(color: Colors.grey, width: 1.0),
                     ),
-                    margin: EdgeInsets.all(10.0),
+                    margin: EdgeInsets.only(
+                        top: 10.0, left: 10.0, right: 10.0, bottom: 5.0),
                     child: Padding(
                       padding: EdgeInsets.all(12.0),
                       child: Column(
@@ -406,6 +412,87 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
+              //DROPDOWM
+              // Container(
+              //   height: 90,
+              //   child: Card(
+              //     color: Color(0xffF6F6FF),
+              //     elevation: 3.0,
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(8.0),
+              //       side: BorderSide(color: Colors.grey, width: 1.0),
+              //     ),
+              //     margin: EdgeInsets.all(10.0),
+              //     child: Padding(
+              //       padding: EdgeInsets.all(12.0),
+              //       child: Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text(
+              //             'Department'.toUpperCase(),
+              //             style: TextStyle(
+              //               fontWeight: FontWeight.bold,
+              //               fontSize: 15.0,
+              //               color: Colors.black,
+              //             ),
+              //           ),
+              //           SizedBox(height: 2.0),
+              //           Row(
+              //             children: [
+              //               Expanded(
+              //                 // child: Text(
+              //                 //   'Dela Cruz, Juan S.'.toUpperCase(),
+              //                 //   //get name from db
+              //                 //   style: TextStyle(
+              //                 //     fontSize: 18.0,
+              //                 //     color: Colors.grey[600],
+              //                 //   ),
+              //                 // ),
+              //                 child: SizedBox(
+              //                   height: 25.0,
+              //                   child: DropdownButtonFormField<String>(
+              //                     decoration: const InputDecoration(
+              //                       hintText: 'Type of Vehicle',
+              //                       contentPadding: EdgeInsets.symmetric(
+              //                         vertical: 10.0,
+              //                         horizontal: 20.0,
+              //                       ),
+              //                       border: OutlineInputBorder(
+              //                         borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              //                       ),
+              //                       enabledBorder: OutlineInputBorder(
+              //                         borderSide: BorderSide(
+              //                             color: Colors.lightBlueAccent, width: 1.0),
+              //                         borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              //                       ),
+              //                       focusedBorder: OutlineInputBorder(
+              //                         borderSide: BorderSide(
+              //                             color: Colors.lightBlueAccent, width: 2.0),
+              //                         borderRadius: BorderRadius.all(Radius.circular(32.0)),
+              //                       ),
+              //                     ),
+              //                     items: dept.map((String value) {
+              //                       return DropdownMenuItem<String>(
+              //                         value: value,
+              //                         child: Text(value),
+              //                       );
+              //                     }).toList(),
+              //                     onChanged: (String? value) {
+              //                       setState(() {
+              //                         _selectedDept = value;
+              //                       });
+              //                     },
+              //                     value: _selectedDept,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
               // Container(
               //   height: 90,
               //   child: Card(
@@ -472,209 +559,281 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 90,
                 child: Row(
                   children: [
+                    // Expanded(
+                    //   child: GestureDetector(
+                    //     onTap: () {
+                    //       showDialog(
+                    //         context: context,
+                    //         builder: (context) => AlertDialog(
+                    //           content: TableCalendar(
+                    //             firstDay: DateTime(2021),
+                    //             lastDay: DateTime(2025),
+                    //             focusedDay: _selectedDate,
+                    //             calendarFormat: CalendarFormat.month,
+                    //             selectedDayPredicate: (day) {
+                    //               return isSameDay(_selectedDate, day);
+                    //             },
+                    //             onDaySelected: (selectedDay, focusedDay) {
+                    //               _onDaySelected(selectedDay, focusedDay);
+                    //               setState(() {
+                    //                 _dateSelected = true;
+                    //               });
+                    //               Navigator.pop(context);
+                    //             },
+                    //           ),
+                    //         ),
+                    //       );
+                    //     },
+                    //     child: Flexible(
+                    //       child: Card(
+                    //         color: Color(0xffFfFfFF),
+                    //         elevation: 2.0,
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(8.0),
+                    //           side: BorderSide(color: Colors.grey, width: 1.0),
+                    //         ),
+                    //         margin: EdgeInsets.only(
+                    //             top: 5.0, left: 10.0, right: 5.0, bottom: 5.0),
+                    //         child: Padding(
+                    //           padding: EdgeInsets.only(
+                    //               top: 12.0,
+                    //               left: 12.0,
+                    //               right: 10.0,
+                    //               bottom: 12.0),
+                    //           child: Column(
+                    //             crossAxisAlignment: CrossAxisAlignment.start,
+                    //             children: [
+                    //               Text(
+                    //                 'Begin'.toUpperCase(),
+                    //                 style: TextStyle(
+                    //                   fontWeight: FontWeight.bold,
+                    //                   fontSize: 13.0,
+                    //                   color: Colors.black,
+                    //                 ),
+                    //               ),
+                    //               // SizedBox(height: 6.0),
+                    //               // Container(
+                    //               //   width: 100,
+                    //               //   child: Row(
+                    //               //     children: [
+                    //               //       // Flexible(
+                    //               //       //   child: Text(
+                    //               //       //     DateFormat('MM/dd/yy')
+                    //               //       //         .format(_selectedDate),
+                    //               //       //     style: TextStyle(
+                    //               //       //       fontSize: 15.0,
+                    //               //       //       color: Colors.grey[600],
+                    //               //       //     ),
+                    //               //       //   ),
+                    //               //       // ),
+                    //               //       // _dateSelected
+                    //               //       //     ? SizedBox.shrink()
+                    //               //       //     : Icon(
+                    //               //       //         Icons.calendar_month_outlined,
+                    //               //       //         size: 15,
+                    //               //       //         color: Colors.grey,
+                    //               //       //       ),
+                    //               //       Flexible(
+                    //               //         // flex: 1,
+                    //               //         child: TextField(
+                    //               //           readOnly: true,
+                    //               //           decoration: InputDecoration(
+                    //               //             // labelText: 'Date',
+                    //               //             // border: OutlineInputBorder(
+                    //               //             //   borderRadius:
+                    //               //             //   BorderRadius.all(Radius.circular(10.0)),
+                    //               //             // ),
+                    //               //             suffixIcon: Icon(Icons.calendar_month_outlined,
+                    //               //                       size: 15,
+                    //               //                       color: Colors.grey,
+                    //               //             ),
+                    //               //           ),
+                    //               //           style: TextStyle(
+                    //               //             fontSize: 15.0,
+                    //               //             color: Colors.grey[600],
+                    //               //           ),
+                    //               //           controller: _dateController, // set the controller for the text field
+                    //               //           onTap: () async {
+                    //               //             final DateTime? selectedDate = await showDatePicker(
+                    //               //               context: context,
+                    //               //               initialDate: DateTime.now(),
+                    //               //               firstDate: DateTime(1900),
+                    //               //               lastDate: DateTime(2100),
+                    //               //             );
+                    //               //             if (selectedDate != null) {
+                    //               //               // update the value of the text field with the selected date
+                    //               //               String formattedDate =
+                    //               //               DateFormat('MM/dd/yyyy').format(selectedDate);
+                    //               //               _dateController.text = formattedDate;
+                    //               //             }
+                    //               //           },
+                    //               //         ),
+                    //               //       ),
+                    //               //     ],
+                    //               //   ),
+                    //               // ),
+                    //               // Container(
+                    //               //   height: 40,
+                    //               //   child: Row(
+                    //               //     crossAxisAlignment: CrossAxisAlignment.stretch,
+                    //               //     children: [
+                    //               //       Expanded(
+                    //               //         child: TextField(
+                    //               //           readOnly: true,
+                    //               //           decoration: InputDecoration(
+                    //               //             suffixIcon: Padding(
+                    //               //               padding: EdgeInsets.only(right: 0.0), // Adjust the padding as needed
+                    //               //               child: Icon(
+                    //               //                 Icons.calendar_month_outlined,
+                    //               //                 size: 15,
+                    //               //                 color: Colors.grey,
+                    //               //               ),
+                    //               //             ),
+                    //               //           ),
+                    //               //           style: TextStyle(
+                    //               //             fontSize: 15.0,
+                    //               //             color: Colors.grey[600],
+                    //               //           ),
+                    //               //           controller: _dateController,
+                    //               //           onTap: () async {
+                    //               //             final DateTime? selectedDate = await showDatePicker(
+                    //               //               context: context,
+                    //               //               initialDate: DateTime.now(),
+                    //               //               firstDate: DateTime(1900),
+                    //               //               lastDate: DateTime(2100),
+                    //               //             );
+                    //               //             if (selectedDate != null) {
+                    //               //               String formattedDate = DateFormat('MM/dd/yyyy').format(selectedDate);
+                    //               //               _dateController.text = formattedDate;
+                    //               //             }
+                    //               //           },
+                    //               //         ),
+                    //               //       ),
+                    //               //     ],
+                    //               //   ),
+                    //               // ),
+                    //               Container(
+                    //                 height: 41,
+                    //                 width: 160,
+                    //                 child: Row(
+                    //                   crossAxisAlignment: CrossAxisAlignment.stretch,
+                    //                   children: [
+                    //                     Expanded(
+                    //                       child: Container(
+                    //                         margin: EdgeInsets.only(left: 0.0), // Adjust the margin as needed
+                    //                         child: TextField(
+                    //                           readOnly: true,
+                    //                           decoration: InputDecoration(
+                    //                             suffixIcon: _dateController.text.isEmpty
+                    //                                 ? SizedBox.shrink()
+                    //                                 : Padding(
+                    //                               padding: EdgeInsets.only(right: 0.0), // Adjust the margin as needed
+                    //                               child: Icon(
+                    //                               Icons.calendar_month_outlined,
+                    //                               size: 15,
+                    //                               color: Colors.grey,
+                    //                             ),
+                    //                           ),
+                    //                           ),
+                    //                           style: TextStyle(
+                    //                             fontSize: 15.0,
+                    //                             color: Colors.grey[600],
+                    //                           ),
+                    //                           controller: _dateController,
+                    //                           onTap: () async {
+                    //                             final DateTime? selectedDate = await showDatePicker(
+                    //                               context: context,
+                    //                               initialDate: DateTime.now(),
+                    //                               firstDate: DateTime(1900),
+                    //                               lastDate: DateTime(2100),
+                    //                             );
+                    //                             if (selectedDate != null) {
+                    //                               String formattedDate = DateFormat('MM/dd/yy').format(selectedDate);
+                    //                               _dateController.text = formattedDate;
+                    //                             }
+                    //                           },
+                    //                         ),
+                    //                       ),
+                    //                     ),
+                    //                   ],
+                    //                 ),
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     Expanded(
                       child: GestureDetector(
-                        onTap: () {
-                          showDialog(
+                        onTap: () async {
+                          final DateTime? selectedBeginDate = await showDatePicker(
                             context: context,
-                            builder: (context) => AlertDialog(
-                              content: TableCalendar(
-                                firstDay: DateTime(2021),
-                                lastDay: DateTime(2025),
-                                focusedDay: _selectedDate,
-                                calendarFormat: CalendarFormat.month,
-                                selectedDayPredicate: (day) {
-                                  return isSameDay(_selectedDate, day);
-                                },
-                                onDaySelected: (selectedDay, focusedDay) {
-                                  _onDaySelected(selectedDay, focusedDay);
-                                  setState(() {
-                                    _dateSelected = true;
-                                  });
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ),
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2021),
+                            lastDate: DateTime(2100),
                           );
+                          if (selectedBeginDate != null) {
+                            _beginDateController.text = DateFormat('MM/dd/yy').format(selectedBeginDate);
+                          }
                         },
                         child: Flexible(
-                          child: Card(
-                            color: Color(0xffFfFfFF),
-                            elevation: 2.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              side: BorderSide(color: Colors.grey, width: 1.0),
-                            ),
-                            margin: EdgeInsets.only(
-                                top: 5.0, left: 10.0, right: 5.0, bottom: 5.0),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: 12.0,
-                                  left: 12.0,
-                                  right: 10.0,
-                                  bottom: 12.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Begin'.toUpperCase(),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13.0,
-                                      color: Colors.black,
+                          child: Container(
+                            height: 75,
+                            child: Card(
+                              color: Color(0xffFfFfFF),
+                              elevation: 2.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                side: BorderSide(color: Colors.grey, width: 1.0),
+                              ),
+                              margin: EdgeInsets.only(
+                                  top: 5.0, left: 10.0, right: 5.0, bottom: 5.0),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: 12.0, left: 12.0, right: 12.0, bottom: 0.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Begin'.toUpperCase(),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13.0,
+                                        color: Colors.black,
+                                      ),
                                     ),
-                                  ),
-                                  // SizedBox(height: 6.0),
-                                  // Container(
-                                  //   width: 100,
-                                  //   child: Row(
-                                  //     children: [
-                                  //       // Flexible(
-                                  //       //   child: Text(
-                                  //       //     DateFormat('MM/dd/yy')
-                                  //       //         .format(_selectedDate),
-                                  //       //     style: TextStyle(
-                                  //       //       fontSize: 15.0,
-                                  //       //       color: Colors.grey[600],
-                                  //       //     ),
-                                  //       //   ),
-                                  //       // ),
-                                  //       // _dateSelected
-                                  //       //     ? SizedBox.shrink()
-                                  //       //     : Icon(
-                                  //       //         Icons.calendar_month_outlined,
-                                  //       //         size: 15,
-                                  //       //         color: Colors.grey,
-                                  //       //       ),
-                                  //       Flexible(
-                                  //         // flex: 1,
-                                  //         child: TextField(
-                                  //           readOnly: true,
-                                  //           decoration: InputDecoration(
-                                  //             // labelText: 'Date',
-                                  //             // border: OutlineInputBorder(
-                                  //             //   borderRadius:
-                                  //             //   BorderRadius.all(Radius.circular(10.0)),
-                                  //             // ),
-                                  //             suffixIcon: Icon(Icons.calendar_month_outlined,
-                                  //                       size: 15,
-                                  //                       color: Colors.grey,
-                                  //             ),
-                                  //           ),
-                                  //           style: TextStyle(
-                                  //             fontSize: 15.0,
-                                  //             color: Colors.grey[600],
-                                  //           ),
-                                  //           controller: _dateController, // set the controller for the text field
-                                  //           onTap: () async {
-                                  //             final DateTime? selectedDate = await showDatePicker(
-                                  //               context: context,
-                                  //               initialDate: DateTime.now(),
-                                  //               firstDate: DateTime(1900),
-                                  //               lastDate: DateTime(2100),
-                                  //             );
-                                  //             if (selectedDate != null) {
-                                  //               // update the value of the text field with the selected date
-                                  //               String formattedDate =
-                                  //               DateFormat('MM/dd/yyyy').format(selectedDate);
-                                  //               _dateController.text = formattedDate;
-                                  //             }
-                                  //           },
-                                  //         ),
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  // Container(
-                                  //   height: 40,
-                                  //   child: Row(
-                                  //     crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  //     children: [
-                                  //       Expanded(
-                                  //         child: TextField(
-                                  //           readOnly: true,
-                                  //           decoration: InputDecoration(
-                                  //             suffixIcon: Padding(
-                                  //               padding: EdgeInsets.only(right: 0.0), // Adjust the padding as needed
-                                  //               child: Icon(
-                                  //                 Icons.calendar_month_outlined,
-                                  //                 size: 15,
-                                  //                 color: Colors.grey,
-                                  //               ),
-                                  //             ),
-                                  //           ),
-                                  //           style: TextStyle(
-                                  //             fontSize: 15.0,
-                                  //             color: Colors.grey[600],
-                                  //           ),
-                                  //           controller: _dateController,
-                                  //           onTap: () async {
-                                  //             final DateTime? selectedDate = await showDatePicker(
-                                  //               context: context,
-                                  //               initialDate: DateTime.now(),
-                                  //               firstDate: DateTime(1900),
-                                  //               lastDate: DateTime(2100),
-                                  //             );
-                                  //             if (selectedDate != null) {
-                                  //               String formattedDate = DateFormat('MM/dd/yyyy').format(selectedDate);
-                                  //               _dateController.text = formattedDate;
-                                  //             }
-                                  //           },
-                                  //         ),
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  Container(
-                                    height: 41,
-                                    width: 160,
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            margin: EdgeInsets.only(left: 0.0), // Adjust the margin as needed
+                                    // SizedBox(height: 6.0),
+                                    Container(
+                                      width: 100,
+                                      height: 35,
+                                      child: Row(
+                                        children: [
+                                          Flexible(
                                             child: TextField(
                                               readOnly: true,
                                               decoration: InputDecoration(
-                                                suffixIcon: _dateController.text.isEmpty
-                                                    ? SizedBox.shrink()
-                                                    : Padding(
-                                                  padding: EdgeInsets.only(right: 0.0), // Adjust the margin as needed
-                                                  child: Icon(
-                                                  Icons.calendar_month_outlined,
-                                                  size: 15,
-                                                  color: Colors.grey,
-                                                ),
-                                              ),
+                                                hintText: DateFormat('MM/dd/yy').format(DateTime.now()),
+                                                border: InputBorder.none,
                                               ),
                                               style: TextStyle(
                                                 fontSize: 15.0,
                                                 color: Colors.grey[600],
                                               ),
-                                              controller: _dateController,
-                                              onTap: () async {
-                                                final DateTime? selectedDate = await showDatePicker(
-                                                  context: context,
-                                                  initialDate: DateTime.now(),
-                                                  firstDate: DateTime(1900),
-                                                  lastDate: DateTime(2100),
-                                                );
-                                                if (selectedDate != null) {
-                                                  String formattedDate = DateFormat('MM/dd/yy').format(selectedDate);
-                                                  _dateController.text = formattedDate;
-                                                }
-                                              },
+                                              controller: _beginDateController,
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                          Icon(
+                                            Icons.calendar_month_outlined,
+                                            size: 15,
+                                            color: Colors.grey,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-
-
-
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -761,23 +920,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     //     ),
                     //   ),
                     // ),
-
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {
-                          final DateTime? selectedDate = await showDatePicker(
+                          final DateTime? selectedEndDate = await showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
                             firstDate: DateTime(2021),
-                            lastDate: DateTime(2025),
+                            lastDate: DateTime(2100),
                           );
-                          if (selectedDate != null) {
-                            setState(() {
-                              _dateController.text = DateFormat('MM/dd/yyyy').format(selectedDate);
-                            });
+                          if (selectedEndDate != null) {
+                            _endDateController.text = DateFormat('MM/dd/yy').format(selectedEndDate);
                           }
                         },
                         child: Flexible(
+                          child: Container(
+                            height: 75,
                           child: Card(
                             color: Color(0xffFfFfFF),
                             elevation: 2.0,
@@ -788,7 +946,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             margin: EdgeInsets.only(
                                 top: 5.0, left: 5.0, right: 5.0, bottom: 5.0),
                             child: Padding(
-                              padding: EdgeInsets.all(12.0),
+                              padding: EdgeInsets.only(
+                                  top: 12.0, left: 12.0, right: 12.0, bottom: 0.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -800,23 +959,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: Colors.black,
                                     ),
                                   ),
-                                  SizedBox(height: 6.0),
+                                  // SizedBox(height: 6.0),
                                   Container(
                                     width: 100,
+                                    height: 35,
                                     child: Row(
                                       children: [
                                         Flexible(
                                           child: TextField(
                                             readOnly: true,
                                             decoration: InputDecoration(
-                                              hintText: 'MM/dd/yyyy',
+                                              hintText: DateFormat('MM/dd/yy').format(DateTime.now()),
                                               border: InputBorder.none,
                                             ),
-                                            controller: _dateController,
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                              color: Colors.grey[600],
+                                            ),
+                                            controller: _endDateController,
                                           ),
                                         ),
                                         Icon(
-                                          Icons.calendar_today,
+                                          Icons.calendar_month_outlined,
                                           size: 15,
                                           color: Colors.grey,
                                         ),
@@ -828,10 +992,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
+                        ),
                       ),
                     ),
-
                     Flexible(
+                      child: Container(
+                        height: 75,
                       child: Card(
                         color: Color(0xffF6F6FF),
                         elevation: 2.0,
@@ -876,6 +1042,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
+                    ),
                   ],
                 ),
               ),
@@ -887,7 +1054,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(8.0),
                     side: BorderSide(color: Colors.grey, width: 1.0),
                   ),
-                  margin: EdgeInsets.all(10.0),
+                  margin: EdgeInsets.only(
+                      top: 5.0, left: 10.0, right: 10.0, bottom: 10.0),
                   child: Padding(
                     padding: EdgeInsets.all(12.0),
                     child: Column(
@@ -1510,7 +1678,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: TableCell(
                               child: Center(
                                 child: Text(
-                                  '05/02/2023',
+                                  DateFormat('MM/dd/yy').format(DateTime.now()),
                                   style: TextStyle(
                                     fontSize: 16.0,
                                     color: Colors.grey[600],

@@ -35,6 +35,9 @@ dependencies:
   auto_size_text_field: ^2.2.1
   mailer: ^6.0.1
   url_launcher: ^6.1.10
+  sqflite: ^2.2.8+4
+  path_provider: ^2.0.15
+  email_validator: ^2.1.17
 #  flutter_email_sender: ^5.2.0
 
 
